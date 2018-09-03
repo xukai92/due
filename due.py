@@ -16,6 +16,10 @@ import sys
 from datetime import datetime, timedelta
 import re
 
+def uk2std(data_str):
+
+    day, month, year
+
 def main(todo_file, future_days=0):
     # Prepare lists to store tasks
     overdue         = list()
@@ -32,10 +36,11 @@ def main(todo_file, future_days=0):
         # Loop through content and look for due dates, assuming the key due:
         # is used and standard date format
         for i, task in enumerate(content):
-            match = re.search(r'due:\d{4}-\d{2}-\d{2}', task)
+            match = re.search(r'due:\d{2}-\w{3}-\d{4}', task)
 
             if match is not None:
-                date = datetime.strptime(match.group()[4:], '%Y-%m-%d').date()
+                data_str = match.group()[4:]
+                date = datetime.strptime(data_str, '%d-%b-%Y').date()
                 tasks_with_date.append((i, task, date))
 
         # Sort tasks that match due: regex by date
